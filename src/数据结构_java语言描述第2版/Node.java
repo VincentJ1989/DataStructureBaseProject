@@ -1,4 +1,4 @@
-package 数据结构_java语言描述第2版.chap2;
+package 数据结构_java语言描述第2版;
 
 /**
  * 结点类
@@ -10,11 +10,11 @@ public class Node {
     /**
      * 数据元素
      */
-    Object data;
+    public Object data;
     /**
      * 下一个结点的对象引用
      */
-    Node next;
+    public Node next;
 
     public Node(Object pData) {
         data = pData;

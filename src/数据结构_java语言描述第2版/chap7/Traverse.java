@@ -1,5 +1,6 @@
 package 数据结构_java语言描述第2版.chap7;
 
+import 数据结构_java语言描述第2版.Visit;
 import 数据结构_java语言描述第2版.chap3.LinkQueue;
 import 数据结构_java语言描述第2版.chap3.LinkStack;
 

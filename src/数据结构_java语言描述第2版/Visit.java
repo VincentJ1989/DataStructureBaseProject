@@ -1,4 +1,4 @@
-package 数据结构_java语言描述第2版.chap7;
+package 数据结构_java语言描述第2版;
 
 /**
  * 访问类的设计

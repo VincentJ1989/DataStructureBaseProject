@@ -1,6 +1,8 @@
 package 数据结构_java语言描述第2版.chap8;
 
+import 数据结构_java语言描述第2版.Visit;
 import 数据结构_java语言描述第2版.chap2.SeqList;
+import 数据结构_java语言描述第2版.chap3.SeqQueue;
 
 /**
  * 邻接矩阵图类的设计<p>
@@ -140,5 +142,101 @@ public class AdjMWGraph {
             }
         }
         return -1;
+    }
+
+    /**
+     * 深度优先遍历
+     * @param visited 标记相应结点是否已访问过（0未访问，1已访问）
+     */
+    private void depthFirstSearch(int v, boolean[] visited, Visit vs)
+        throws Exception {
+        // 访问该结点
+        vs.print(getValue(v));
+        // 设置已访问标识
+        visited[v] = true;
+
+        // 获取第一个邻接结点
+        int w = getFirstNeighbor(v);
+        while (w != -1) {
+            // 邻接结点存在时循环
+
+            if (!visited[w]) {
+                // 如果没访问过
+                depthFirstSearch(w, visited, vs);
+            }
+            // 获取下一个邻接结点
+            w = getNextNeighbor(v, w);
+        }
+    }
+
+    /**
+     * 广度优先遍历
+     */
+    private void broadFirstSearch(int v, boolean[] visited, Visit vs)
+        throws Exception {
+        int u, w;
+        // 创建顺序队列
+        SeqQueue queue = new SeqQueue();
+
+        vs.print(getValue(v));
+        visited[v] = true;
+
+        queue.append(new Integer(v));
+
+        while (queue.notEmpty()) {
+            // 出队列
+            u = (int) queue.delete();
+            // 取结点u的第一个邻接结点
+            w = getFirstNeighbor(u);
+            while (w != -1) {
+                // 当邻接结点存在时循环
+                if (!visited[w]) {
+                    // 没被访问过
+                    vs.print(getValue(w));
+                    visited[w] = true;
+                    queue.append(w);
+                }
+                // 取结点u的邻接结点w的下一个邻接结点
+                w = getNextNeighbor(u, w);
+            }
+        }
+    }
+
+    /**
+     * 非连通图的深度优先遍历
+     */
+    public void depthFirstSearch(Visit vs)
+        throws Exception {
+        boolean[] visited = new boolean[getNumOfVertices()];
+        // 置所有结点均为访问过
+        for (int i = 0; i < getNumOfVertices(); i++) {
+            visited[i] = false;
+        }
+        // 对每个结点循环
+        for (int i = 0; i < getNumOfVertices(); i++) {
+            if (!visited[i]) {
+                // 如果未访问，以i为初始结点深度优先遍历
+                depthFirstSearch(i, visited, vs);
+            }
+        }
+    }
+
+    /**
+     * 非连通图的广度优先遍历
+     */
+    public void broadFirstSearch(Visit vs)
+        throws Exception {
+        boolean[] visited = new boolean[getNumOfVertices()];
+        // 置所有结点均为访问过
+        for (int i = 0; i < getNumOfVertices(); i++) {
+            visited[i] = false;
+        }
+        // 对每个结点循环
+        for (int i = 0; i < getNumOfVertices(); i++) {
+            if (!visited[i]) {
+                // 如果未访问，以i为初始结点广度优先遍历
+                broadFirstSearch(i, visited, vs);
+            }
+        }
     }
 }

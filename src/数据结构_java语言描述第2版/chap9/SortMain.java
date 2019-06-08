@@ -1,12 +1,15 @@
 package 数据结构_java语言描述第2版.chap9;
 
+import 数据结构_java语言描述第2版.chap3.LinkQueue;
+
 /**
  * 排序
  * @author VincentJ
  * @date 2019-06-07
  */
 public class SortMain {
-    public static void main(String[] args) {
+    public static void main(String[] args)
+        throws Exception {
         int[] test = {5, 1, 3, 6, 2, 4};
 
         insertSort(test);
@@ -29,6 +32,56 @@ public class SortMain {
         }
         test = new int[] {5, 1, 3, 6, 2, 4};
         mergeSort(test);
+        test = new int[] {5, 1, 3, 6, 2, 4};
+        radixSort(test, 1, 10);
+
+    }
+
+    /**
+     * 基数排序(桶排序)
+     * @param d 进制的基数
+     * @param m 数据元素的最大位数
+     */
+    public static void radixSort(int[] a, int m, int d)
+        throws Exception {
+        int n = a.length;
+        int i, j, k;
+        int power = 1;
+        LinkQueue[] myQueue = new LinkQueue[d];
+
+        // 创建链式队列数组对象
+        for (i = 0; i < d; i++) {
+            LinkQueue temp = new LinkQueue();
+            myQueue[i] = temp;
+        }
+        // 进行m次基数排序
+        for (i = 0; i < m; i++) {
+            if (i == 0) {
+                power = 1;
+            } else {
+                power = power * d;
+            }
+
+            // 依次将n个数据元素按第k位的大小放到相应的队列中
+            for (j = 0; j < n; j++) {
+                k = a[j] / power - (a[j] / (power * d)) * d;// 计算k值
+                myQueue[k].append(a[j]);
+            }
+            // 顺序回收各队列中的数据元素到数组a中
+            int p = 0;
+            for (j = 0; j < d; j++) {
+                while (myQueue[j].notEmpty()) {
+                    a[p] = (int) myQueue[j].delete();
+                    p++;
+                }
+            }
+        }
+
+        System.out.println();
+        System.out.print("基数排序:");
+        for (int b : a) {
+            System.out.print(b + " ");
+        }
     }
 
     /**

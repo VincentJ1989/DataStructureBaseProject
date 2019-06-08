@@ -10,10 +10,90 @@ public class SortMain {
         int[] test = {5, 1, 3, 6, 2, 4};
 
         insertSort(test);
+        test = new int[] {5, 1, 3, 6, 2, 4};
         shellSort(test, new int[] {3, 2, 1});
+        test = new int[] {5, 1, 3, 6, 2, 4};
         selectSort(test);
+        test = new int[] {5, 1, 3, 6, 2, 4};
         selectSort2(test);
+        test = new int[] {5, 1, 3, 6, 2, 4};
         heapSort(test);
+        test = new int[] {5, 1, 3, 6, 2, 4};
+        dubbleSort(test);
+        test = new int[] {5, 1, 3, 6, 2, 4};
+        quickSort(test, 0, test.length - 1);
+        System.out.println();
+        System.out.print("快速排序:");
+        for (int b : test) {
+            System.out.print(b + " ");
+        }
+
+    }
+
+    /**
+     * 快速排序
+     */
+    public static void quickSort(int[] a, int low, int high) {
+        int i = low;
+        int j = high;
+        int temp = a[low];// 以第一个元素作为标准数据
+
+        while (i < j) {
+            // 扫描右端
+            while (i < j && temp <= a[j]) {
+                j--;
+            }
+            if (i < j) {
+                a[i] = a[j];
+                i++;
+            }
+
+            // 扫描左端
+            while (i < j && a[i] < temp) {
+                i++;
+            }
+
+            if (i < j) {
+                a[j] = a[i];
+                j--;
+            }
+        }
+
+        a[i] = temp;
+        if (low < i) {
+            // 左端递归
+            quickSort(a, low, i - 1);
+        }
+        if (i < high) {
+            // 右端递归
+            quickSort(a, j + 1, high);
+        }
+    }
+
+    /**
+     * 冒泡排序
+     */
+    public static void dubbleSort(int[] a) {
+        int flag = 1;// 标记本次排序是否有交换(1有，0没有),可以提前结束，减少不必要的循环
+        int n = a.length;
+        int temp;
+
+        for (int i = 1; i < n && flag == 1; i++) {
+            flag = 0;
+            for (int j = 0; j < n - 1; j++) {
+                if (a[j] > a[j + 1]) {
+                    flag = 1;
+                    temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+            }
+        }
+        System.out.println();
+        System.out.print("冒泡排序:");
+        for (int b : a) {
+            System.out.print(b + " ");
+        }
     }
 
     /**
@@ -39,8 +119,8 @@ public class SortMain {
             // 传i是因为后面的肯定比前面的大
             createHeap(a, i, 0);
         }
-
-        System.out.println("堆排序");
+        System.out.println();
+        System.out.print("堆排序:");
         for (int b : a) {
             System.out.print(b + " ");
         }
@@ -106,10 +186,10 @@ public class SortMain {
                 a[i] = temp;
             }
         }
-
-        System.out.println("直接选择排序(稳定版)");
+        System.out.println();
+        System.out.print("直接选择排序(稳定版):");
         for (int b : a) {
-            System.out.println(b);
+            System.out.print(b + " ");
         }
     }
 
@@ -137,10 +217,10 @@ public class SortMain {
                 a[small] = temp;
             }
         }
-
-        System.out.println("直接选择排序(不稳定版)");
+        System.out.println();
+        System.out.print("直接选择排序(不稳定版):");
         for (int b : a) {
-            System.out.println(b);
+            System.out.print(b + " ");
         }
     }
 
@@ -167,10 +247,10 @@ public class SortMain {
                 }
             }
         }
-
-        System.out.println("希尔排序");
+        System.out.println();
+        System.out.print("希尔排序:");
         for (int b : a) {
-            System.out.println(b);
+            System.out.print(b + " ");
         }
     }
 
@@ -190,10 +270,9 @@ public class SortMain {
             }
             a[j + 1] = temp;
         }
-
-        System.out.println("直接插入排序");
+        System.out.print("直接插入排序:");
         for (int b : a) {
-            System.out.println(b);
+            System.out.print(b + " ");
         }
     }
 

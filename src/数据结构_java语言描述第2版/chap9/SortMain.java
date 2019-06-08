@@ -27,7 +27,79 @@ public class SortMain {
         for (int b : test) {
             System.out.print(b + " ");
         }
+        test = new int[] {5, 1, 3, 6, 2, 4};
+        mergeSort(test);
+    }
 
+    /**
+     * 归并排序
+     */
+    public static void mergeSort(int[] a) {
+        int n = a.length;
+        int k = 1;// 归并长度从1开始
+        int[] swap = new int[n];
+
+        while (k < n) {
+            merge(a, swap, k);
+            // 从swap中放回a中
+            for (int i = 0; i < n; i++) {
+                a[i] = swap[i];
+            }
+            // 归并长度扩大
+            k = 2 * k;
+        }
+
+        System.out.println();
+        System.out.print("归并排序:");
+        for (int b : a) {
+            System.out.print(b + " ");
+        }
+    }
+
+    /**
+     * 一次归并
+     */
+    public static void merge(int[] a, int[] swap, int k) {
+        int n = a.length;
+        int m = 0;
+        int i, j, u1, u2, l2;
+
+        int l1 = 0;// 第一个有序子数组下界为0
+        while (l1 + k <= n - 1) {
+            l2 = l1 + k;// 第二个有序数组下界
+            u2 = (l2 + k - 1 <= n - 1) ? l2 + k - 1 : n - 1;// 第二个有序数组上界
+            u1 = l2 - 1;// 第一个有序数组上界
+
+            for (i = l1, j = l2; i <= u1 && j <= u2; m++) {
+                if (a[i] <= a[j]) {
+                    swap[m] = a[i];
+                    i++;
+                } else {
+                    swap[m] = a[j];
+                    j++;
+                }
+            }
+
+            // 子数组2已归并完，将子数组1中的剩余元素放到数组swap中
+            while (i <= u1) {
+                swap[m] = a[i];
+                m++;
+                i++;
+            }
+
+            // 子数组1已归并完，将子数组2中的剩余元素放到数组swap中
+            while (j <= u2) {
+                swap[m] = a[j];
+                m++;
+                j++;
+            }
+            l1 = u2 + 1;
+        }
+
+        // 将原始数组中只够一组的数据元素顺序存放到数组swap中
+        for (i = l1; i < n; i++, m++) {
+            swap[m] = a[i];
+        }
     }
 
     /**
